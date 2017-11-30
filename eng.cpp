@@ -87,11 +87,12 @@ GLuint loadShader(const char *shaderSrc, GLenum type) {
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
     GL_CHECK();
     if (infoLen > 1) {
-      char infoLog[infoLen] = {0};
+      char *infoLog = new char[infoLen];
       glGetShaderInfoLog(shader, infoLen, NULL, infoLog);
       GL_CHECK();
       std::string log = infoLog;
       std::cerr << "Error compiling shader: " << log;
+      delete infoLog;
     }
     glDeleteShader(shader);
     GL_CHECK();
@@ -187,11 +188,12 @@ Uint32 initWindow(int height, int width) {
     glGetProgramiv(programObject, GL_INFO_LOG_LENGTH, &infoLen);
     GL_CHECK();
     if (infoLen > 1) {
-      char infoLog[infoLen] = {};
+      char *infoLog = new char[infoLen];
       glGetProgramInfoLog(programObject, infoLen, NULL, infoLog);
       GL_CHECK();
       std::string log = infoLog;
       std::cout << "Error linking program: " << log << std::endl;
+      delete infoLog;
     }
     glDeleteProgram(programObject);
     GL_CHECK();
