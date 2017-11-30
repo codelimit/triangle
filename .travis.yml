@@ -17,8 +17,9 @@ before_install:
     - cd ..
     - ls
     - wget https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0.tgz
+    - ls
     - tar -xzvf glew-2.1.0.tgz
-
+    - ls
 
 install:
     - "(cd SDL2-2.0.5 && ./configure && make && sudo make install)"
