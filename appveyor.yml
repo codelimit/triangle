@@ -50,16 +50,6 @@ build_script:
         -DCMAKE_BUILD_TYPE=Debug
   - cmake --build . --config Debug
 
-after_build:
-    - cd C:/projects/game
-    - dir
-    - cd C:/projects/game/Debug
-    - dir
-    - cd C:/projects/game/eng.dir
-    - dir
-    - cd C:/projects/game/Win32
-    - dir
-
 artifacts:
   - path: Debug/main.exe
   - path: Debug/eng.dll
