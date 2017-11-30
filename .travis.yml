@@ -18,7 +18,6 @@ before_install:
     
 install:
     - "(cd SDL2-2.0.5 && ./configure && make && sudo make install)"
-    - cd ..
     - ls
     - "(cd glew-2.1.0 && ./configure && make && sudo make install)"
 
