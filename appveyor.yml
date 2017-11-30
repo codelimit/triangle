@@ -1,0 +1,77 @@
+version: '1.0.{build}'
+#test
+image: Visual Studio 2015
+
+platform:
+  - x86
+ 
+configuration:
+  - Debug
+    
+environment:
+  BASEDIR: c:\mylibs
+  INCLUDEDIR: c:\mylibs\include\SDL2
+  LIBDIR: c:\mylibs\lib
+  PKG: c:\pkg
+  GLEW: c:\glew
+
+install:
+
+# Setting directories
+  - cmake --version
+  - mkdir %PKG%
+  - mkdir %GLEW%
+
+# Install vcpkg
+  - cd C:/pkg
+  - appveyor DownloadFile https://www.github.com/Microsoft/vcpkg/archive/master.zip
+  - dir
+  - 7z x master.zip > nul
+  - cd vcpkg-master
+  - dir
+  - bootstrap-vcpkg.bat
+  - vcpkg integrate install
+  - vcpkg install sdl2
+  - cd 
+  
+# Install GLEW
+
+ - cd C:/glew
+ - appveyor DownloadFile https://downloads.sourceforge.net/project/glew/glew/2.1.0/glew-2.1.0-win32.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fglew%2Ffiles%2Fglew%2F&ts=1512053189&use_mirror=netix
+ - dir
+ - 7z x glew-2.1.0-win32.zip > nul
+ - cd glew-2.1.0
+ - dir
+ - cd
+  
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - cmake
+        -DCMAKE_TOOLCHAIN_FILE=C:\pkg\vcpkg-master\scripts\buildsystems\vcpkg.cmake
+        -DCMAKE_BUILD_TYPE=Debug
+  - cmake --build . --config Debug
+
+after_build:
+    - cd C:/projects/game
+    - dir
+    - cd C:/projects/game/Debug
+    - dir
+    - cd C:/projects/game/eng.dir
+    - dir
+    - cd C:/projects/game/Win32
+    - dir
+
+artifacts:
+  - path: Debug/main.exe
+  - path: Debug/eng.dll
+  - path: Debug/SDL2d.dll
+  
+deploy:
+   description: '$(APPVEYOR_REPO_TAG_NAME)'
+   provider: GitHub
+   auth_token:
+       secure: wJ1OEBlw/Ro3EjUOaMtBe6WTQbVmHNhXD79e4/d5/dRdrOa2PI/lmOJzfdaZWM5N
+   artifact: main.exe
+   force_update: true
+   on:
+        appveyor_repo_tag: true 

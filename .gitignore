@@ -1,0 +1,5 @@
+/.project
+/.cproject
+/build/
+/glew32.dll
+/.settings/
