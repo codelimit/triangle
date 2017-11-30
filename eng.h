@@ -28,8 +28,8 @@ struct ENG triangle {
   }
 };
 
-std::istream &ENG operator>>(std::istream &is, vertex &);
-std::istream &ENG operator>>(std::istream &is, triangle &);
+ENG std::istream &operator>>(std::istream &is, vertex &);
+ENG std::istream &operator>>(std::istream &is, triangle &);
 
 bool ENG initAll();
 
