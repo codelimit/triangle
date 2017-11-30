@@ -13,16 +13,12 @@ compiler:
 before_install:
     - wget https://www.libsdl.org/release/SDL2-2.0.5.tar.gz -O SDL2-2.0.5.tar.gz
     - tar -xzvf SDL2-2.0.5.tar.gz
-    - ls
-    - cd ..
-    - ls
     - wget https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0.tgz
-    - ls
     - tar -xzvf glew-2.1.0.tgz
-    - ls
-
+    
 install:
     - "(cd SDL2-2.0.5 && ./configure && make && sudo make install)"
+    - cd ..
     - "(cd glew-2.1.0 && ./configure && make && sudo make install)"
 
 script:
